@@ -1,0 +1,215 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Comprehensive product information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "images": { 
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "price": { "type": "number" },
+        "compareAtPrice": { "type": "number" },
+        "sku": { "type": "string" },
+        "stock": { "type": "number" },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string" },
+              "values": { 
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "offers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "quantity": { "type": "number" },
+              "price": { "type": "number" }
+            }
+          }
+        },
+        "videoUrl": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "price", "createdBy"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "fullName": { "type": "string" },
+        "phone": { "type": "string" },
+        "wilaya": { "type": "string" },
+        "commune": { "type": "string" },
+        "address": { "type": "string" },
+        "shippingType": { "type": "string", "enum": ["home", "office"] },
+        "shippingPrice": { "type": "number" },
+        "totalPrice": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "shipped", "delivered", "cancelled"] },
+        "trackingNumber": { "type": "string" },
+        "trackingLink": { "type": "string" },
+        "sellerUid": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "fullName", "phone", "wilaya", "commune", "status", "sellerUid", "createdAt"]
+    },
+    "ShippingSettings": {
+      "title": "Shipping Settings",
+      "description": "API credentials for shipping companies",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "yalidineApiKey": { "type": "string" },
+        "yalidineApiToken": { "type": "string" },
+        "noestUsername": { "type": "string" },
+        "noestPassword": { "type": "string" },
+        "zrApiKey": { "type": "string" },
+        "zrApiSecret": { "type": "string" },
+        "shippingRates": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "home": { "type": "number" },
+              "office": { "type": "number" }
+            }
+          }
+        }
+      },
+      "required": ["userId"]
+    },
+    "AppSettings": {
+      "title": "App Settings",
+      "description": "Third-party app integrations (Pixel, Google Sheets, etc.)",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fbPixelId": { "type": "string" },
+        "tiktokPixelId": { "type": "string" },
+        "googleAnalyticsId": { "type": "string" },
+        "googleSheetsId": { "type": "string" },
+        "googleSheetsConnected": { "type": "boolean" }
+      },
+      "required": ["userId"]
+    },
+    "StorefrontSettings": {
+      "title": "Storefront Settings",
+      "description": "Branding and domain settings for the storefront",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "storeName": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "faviconUrl": { "type": "string" },
+        "primaryColor": { "type": "string" },
+        "customDomain": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "thankYouMessage": { "type": "string" }
+      },
+      "required": ["userId"]
+    },
+    "NotificationSettings": {
+      "title": "Notification Settings",
+      "description": "API credentials and templates for SMS/WhatsApp notifications",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "provider": { "type": "string", "enum": ["twilio", "infobip"] },
+        "twilioSid": { "type": "string" },
+        "twilioAuthToken": { "type": "string" },
+        "twilioFromNumber": { "type": "string" },
+        "infobipApiKey": { "type": "string" },
+        "infobipBaseUrl": { "type": "string" },
+        "orderConfirmationTemplate": { "type": "string" },
+        "orderShippedTemplate": { "type": "string" },
+        "abandonedCartTemplate": { "type": "string" },
+        "merchantNotificationEnabled": { "type": "boolean" },
+        "merchantNotificationEmail": { "type": "string" }
+      },
+      "required": ["userId"]
+    },
+    "AbandonedCart": {
+      "title": "Abandoned Cart",
+      "description": "Information about customers who didn't complete their order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "phone": { "type": "string" },
+        "wilaya": { "type": "string" },
+        "commune": { "type": "string" },
+        "sellerUid": { "type": "string" },
+        "isRecovered": { "type": "boolean" },
+        "reminderSent": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "phone", "sellerUid", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile documents"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Product documents"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer order documents"
+    },
+    "/shipping_settings/{userId}": {
+      "schema": "ShippingSettings",
+      "description": "User shipping settings"
+    },
+    "/app_settings/{userId}": {
+      "schema": "AppSettings",
+      "description": "User app integration settings"
+    },
+    "/storefront_settings/{userId}": {
+      "schema": "StorefrontSettings",
+      "description": "User storefront and branding settings"
+    },
+    "/notification_settings/{userId}": {
+      "schema": "NotificationSettings",
+      "description": "User notification and automation settings"
+    },
+    "/abandoned_carts/{cartId}": {
+      "schema": "AbandonedCart",
+      "description": "Abandoned cart documents"
+    }
+  }
+}
