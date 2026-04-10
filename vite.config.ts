@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
-  base: './', 
   plugins: [react(), tailwindcss()],
+  base: './',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './'),
@@ -13,5 +13,6 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-  }
+    chunkSizeWarningLimit: 1600,
+  },
 });
