@@ -4,11 +4,14 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
-  base: './', // هادي هي اللي تنحي الشاشة البيضاء
+  base: './', 
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './'),
     },
   },
+  build: {
+    outDir: 'dist',
+  }
 });
